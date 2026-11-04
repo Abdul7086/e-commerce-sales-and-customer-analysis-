@@ -1,0 +1,15 @@
+table DimCustomer
+
+	column 'Customer ID'
+		dataType: string
+		sourceColumn: customer_id
+	column 'Customer Name'
+		dataType: string
+		sourceColumn: customer_name
+	column Segment
+		dataType: string
+		sourceColumn: segment
+
+	partition DimCustomer = m
+		mode: import
+		source = CustomerRows

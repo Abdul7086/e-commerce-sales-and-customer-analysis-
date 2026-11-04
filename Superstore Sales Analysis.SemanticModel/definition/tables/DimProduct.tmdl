@@ -1,0 +1,18 @@
+table DimProduct
+
+	column 'Product ID'
+		dataType: string
+		sourceColumn: product_id
+	column 'Product Name'
+		dataType: string
+		sourceColumn: product_name
+	column Category
+		dataType: string
+		sourceColumn: category
+	column 'Sub-Category'
+		dataType: string
+		sourceColumn: sub_category
+
+	partition DimProduct = m
+		mode: import
+		source = ProductRows

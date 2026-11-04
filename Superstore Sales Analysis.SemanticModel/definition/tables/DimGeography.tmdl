@@ -1,0 +1,25 @@
+table DimGeography
+
+	column 'Geography Key'
+		dataType: string
+		sourceColumn: geography_key
+		isHidden
+	column Country
+		dataType: string
+		sourceColumn: country
+		dataCategory: Country
+	column Region
+		dataType: string
+		sourceColumn: region
+	column State
+		dataType: string
+		sourceColumn: state
+		dataCategory: StateOrProvince
+	column City
+		dataType: string
+		sourceColumn: city
+		dataCategory: City
+
+	partition DimGeography = m
+		mode: import
+		source = GeographyRows

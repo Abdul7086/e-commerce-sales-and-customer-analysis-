@@ -1,0 +1,9 @@
+table DimShipMode
+
+	column 'Ship Mode'
+		dataType: string
+		sourceColumn: ship_mode
+
+	partition DimShipMode = m
+		mode: import
+		source = ShipModeRows

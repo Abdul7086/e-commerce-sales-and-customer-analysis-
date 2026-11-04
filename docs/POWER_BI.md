@@ -51,6 +51,8 @@ Use question-led chart titles such as “Which sub-categories lose money?” Add
 - Verify map geocoding; replace it with a city/state bar or matrix if Power BI places a city incorrectly.
 - Save as `Superstore_Sales_Customer_Analysis.pbix` in the project root and record the Power BI Desktop version used.
 
-## Why no finished PBIX is included
+## Power BI project files
 
-The reference PBIX was inspected and its visual structure mapped above, but Power BI Desktop is not installed in this environment. A `.pbix` assembled without opening and validating it in Desktop would be unverified. The cleaned source, model recipe, DAX, theme, and visual mapping are provided for a Desktop build.
+Run `python src/build_powerbi.py` after the data pipeline. This creates `Superstore Sales Analysis.pbip`, a PBIR report folder with all 14 visuals, and a TMDL semantic model with imported data and one-to-many dimensions. The builder writes the current checkout path into its `pProjectRoot` query parameter. Rerun it after cloning or moving the checkout, then open the `.pbip` in Power BI Desktop.
+
+Power BI Desktop is not installed in this environment, so the PBIP could not be opened, refreshed, saved, or exported as a binary `.pbix` here. In Desktop, first refresh the cleaned CSV, mark `DimDate` as the date table, confirm sort-by columns and relationships, then save. The Top 10 customer filter is included in the report definition; verify the Top N shows ten values after refresh.

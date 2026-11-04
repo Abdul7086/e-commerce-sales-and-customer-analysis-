@@ -1,0 +1,40 @@
+table DimDate
+
+	column Date
+		dataType: dateTime
+		sourceColumn: Date
+	column Year
+		dataType: int64
+		sourceColumn: Year
+	column 'Month Number'
+		dataType: int64
+		sourceColumn: Month Number
+		isHidden
+	column Month
+		dataType: string
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+	column 'Year-Month'
+		dataType: string
+		sourceColumn: Year-Month
+		sortByColumn: 'Year-Month Sort'
+	column 'Year-Month Sort'
+		dataType: int64
+		sourceColumn: Year-Month Sort
+		isHidden
+	column 'Quarter Number'
+		dataType: int64
+		sourceColumn: Quarter Number
+		isHidden
+	column Quarter
+		dataType: string
+		sourceColumn: Quarter
+		sortByColumn: 'Year-Quarter Sort'
+	column 'Year-Quarter Sort'
+		dataType: int64
+		sourceColumn: Year-Quarter Sort
+		isHidden
+
+	partition DimDate = m
+		mode: import
+		source = DateRows

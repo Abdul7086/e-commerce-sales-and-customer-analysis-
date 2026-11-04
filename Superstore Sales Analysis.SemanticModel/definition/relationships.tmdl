@@ -1,0 +1,19 @@
+relationship Customer
+	fromColumn: FactOrderLine.'Customer ID'
+	toColumn: DimCustomer.'Customer ID'
+
+relationship Product
+	fromColumn: FactOrderLine.'Product ID'
+	toColumn: DimProduct.'Product ID'
+
+relationship Geography
+	fromColumn: FactOrderLine.'Geography Key'
+	toColumn: DimGeography.'Geography Key'
+
+relationship ShipMode
+	fromColumn: FactOrderLine.'Ship Mode'
+	toColumn: DimShipMode.'Ship Mode'
+
+relationship OrderDate
+	fromColumn: FactOrderLine.'Order Date'
+	toColumn: DimDate.Date

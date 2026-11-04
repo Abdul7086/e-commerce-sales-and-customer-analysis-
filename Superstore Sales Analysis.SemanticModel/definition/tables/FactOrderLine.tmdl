@@ -1,0 +1,141 @@
+table FactOrderLine
+
+	column 'Row ID'
+		dataType: int64
+		sourceColumn: row_id
+		isHidden
+	column 'Order ID'
+		dataType: string
+		sourceColumn: order_id
+	column 'Order Date'
+		dataType: dateTime
+		sourceColumn: order_date
+	column 'Ship Date'
+		dataType: dateTime
+		sourceColumn: ship_date
+	column 'Ship Mode'
+		dataType: string
+		sourceColumn: ship_mode
+		isHidden
+	column 'Customer ID'
+		dataType: string
+		sourceColumn: customer_id
+		isHidden
+	column 'Customer Name'
+		dataType: string
+		sourceColumn: customer_name
+	column Segment
+		dataType: string
+		sourceColumn: segment
+	column Country
+		dataType: string
+		sourceColumn: country
+		isHidden
+	column City
+		dataType: string
+		sourceColumn: city
+		isHidden
+	column State
+		dataType: string
+		sourceColumn: state
+		isHidden
+	column 'Postal Code'
+		dataType: string
+		sourceColumn: postal_code
+		isHidden
+	column Region
+		dataType: string
+		sourceColumn: region
+	column 'Product ID'
+		dataType: string
+		sourceColumn: product_id
+		isHidden
+	column Category
+		dataType: string
+		sourceColumn: category
+	column 'Sub-Category'
+		dataType: string
+		sourceColumn: sub_category
+	column 'Product Name'
+		dataType: string
+		sourceColumn: product_name
+	column Sales
+		dataType: double
+		sourceColumn: sales
+	column Quantity
+		dataType: int64
+		sourceColumn: quantity
+	column Discount
+		dataType: double
+		sourceColumn: discount
+	column Profit
+		dataType: double
+		sourceColumn: profit
+	column 'Ship Days'
+		dataType: int64
+		sourceColumn: ship_days
+	column 'Geography Key'
+		dataType: string
+		sourceColumn: geography_key
+		isHidden
+	column 'Order Year'
+		dataType: int64
+		sourceColumn: order_year
+		isHidden
+	column 'Order Month'
+		dataType: int64
+		sourceColumn: order_month
+		isHidden
+	column 'Order Month Name'
+		dataType: string
+		sourceColumn: order_month_name
+		isHidden
+	column 'Order Quarter'
+		dataType: string
+		sourceColumn: order_quarter
+		isHidden
+	column 'Is Valid'
+		dataType: boolean
+		sourceColumn: is_valid
+		isHidden
+	measure Sales = SUM(FactOrderLine[Sales])
+		formatString: $#,0.00;($#,0.00);$#,0.00
+
+	measure Profit = SUM(FactOrderLine[Profit])
+		formatString: $#,0.00;($#,0.00);$#,0.00
+
+	measure Quantity = SUM(FactOrderLine[Quantity])
+		formatString: #,0
+
+	measure Orders = DISTINCTCOUNT(FactOrderLine[Order ID])
+		formatString: #,0
+
+	measure Customers = DISTINCTCOUNT(DimCustomer[Customer ID])
+		formatString: #,0
+
+	measure 'Average Order Value' = DIVIDE([Sales], [Orders])
+		formatString: $#,0.00
+
+	measure 'Profit Margin' = DIVIDE([Profit], [Sales])
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Sales YoY %' = VAR PriorYearSales = CALCULATE([Sales], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Sales] - PriorYearSales, PriorYearSales)
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Profit YoY %' = VAR PriorYearProfit = CALCULATE([Profit], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Profit] - PriorYearProfit, ABS(PriorYearProfit))
+		formatString: 0.0%;-0.0%;0.0%
+
+	measure 'Average Discount' = AVERAGE(FactOrderLine[Discount])
+		formatString: 0.0%
+
+	measure 'Loss Making Lines' = CALCULATE(COUNTROWS(FactOrderLine), FactOrderLine[Profit] < 0)
+		formatString: #,0
+
+	measure 'Loss Line %' = DIVIDE([Loss Making Lines], COUNTROWS(FactOrderLine))
+		formatString: 0.0%
+
+	measure 'Sales per Customer' = DIVIDE([Sales], [Customers])
+		formatString: $#,0.00
+	partition FactOrderLine = m
+		mode: import
+		source = FactRows

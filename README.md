@@ -8,7 +8,8 @@ Interview-ready, reproducible analytics project built from the provided Sample S
 2. Run `python src/pipeline.py` from this folder.
 3. Open `data/processed/superstore_analysis.xlsx` for the Excel deliverable. The cleaned CSV, profile, and validation report are created beside it.
 4. Run `python src/load_sqlite.py` to create a local SQLite star schema at `data/processed/superstore.db`; query it with the scripts in `sql/`.
-5. Follow [Power BI build instructions](docs/POWER_BI.md) and the [reference-matched layout](powerbi/layout.json) to create the report in Power BI Desktop. A `.pbix` is intentionally not included because Power BI Desktop is unavailable here for authoring and validation.
+5. Run `python src/build_powerbi.py` to generate the openable PBIP report and semantic model, then open `Superstore Sales Analysis.pbip` in Power BI Desktop. The builder sets the data-root parameter to the current checkout, so rerun it after cloning or moving the folder.
+6. In Power BI Desktop, mark `DimDate` as the date table, confirm the sort-by columns and relationships, refresh the data, and save once. The reference-matched visuals and DAX are already wired in the project. A binary `.pbix` is not included because Power BI Desktop is unavailable here to open, refresh, and validate an export.
 
 ## Questions this dashboard answers
 
@@ -35,7 +36,7 @@ The pipeline preserves every original row and adds `is_valid` so questionable re
 
 ## Reproducibility and validation
 
-`validation.json` reports source row count and key data rules. The expected row count is the known 9,994 rows in this supplied extract; change the check if using another version. See [Data Dictionary](docs/DATA_DICTIONARY.md) and [Interview Guide](docs/INTERVIEW_GUIDE.md).
+`validation.json` reports source row count and key data rules. Run `python src/validate_project.py` for the complete workflow check after generating the Excel, SQLite, and PBIP outputs. The expected row count is the known 9,994 rows in this supplied extract; change the check if using another version. See [Data Dictionary](docs/DATA_DICTIONARY.md) and [Interview Guide](docs/INTERVIEW_GUIDE.md).
 
 ## Important metric definitions
 

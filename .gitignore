@@ -4,3 +4,7 @@ __pycache__/
 data/processed/*.csv
 data/processed/*.json
 data/processed/*.db
+
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+

@@ -1,0 +1,41 @@
+expression pProjectRoot = "C:\Users\abbuj\.codex\.chatgpt-projects\g-p-6aeb31f7c26081919b5e5e1086094527\repo" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+
+expression CleanedRows = ```
+let
+    Raw = Csv.Document(File.Contents(pProjectRoot & "\data\processed\superstore_clean.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Headers = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Headers, {{"row_id", Int64.Type}, {"order_date", type date}, {"ship_date", type date}, {"sales", type number}, {"quantity", Int64.Type}, {"discount", type number}, {"profit", type number}, {"ship_days", Int64.Type}, {"order_year", Int64.Type}, {"order_month", Int64.Type}, {"is_valid", type logical}}, "en-US"),
+    PostalText = Table.TransformColumnTypes(Typed, {{"postal_code", type text}}, "en-US"),
+    GeographyKey = Table.AddColumn(PostalText, "geography_key", each Text.Combine({[country], [region], [state], [city]}, "|"), type text)
+in
+    GeographyKey
+```
+
+expression FactRows = Table.SelectRows(CleanedRows, each [is_valid] = true)
+
+expression CustomerRows = Table.Group(FactRows, {"customer_id"}, {{"customer_name", each List.First(List.RemoveNulls([customer_name])), type text}, {"segment", each List.First(List.RemoveNulls([segment])), type text}})
+
+expression ProductRows = Table.Group(FactRows, {"product_id"}, {{"product_name", each List.First(List.RemoveNulls([product_name])), type text}, {"category", each List.First(List.RemoveNulls([category])), type text}, {"sub_category", each List.First(List.RemoveNulls([sub_category])), type text}})
+
+expression ShipModeRows = Table.Distinct(Table.SelectColumns(FactRows, {"ship_mode"}))
+
+expression GeographyRows = Table.Distinct(Table.SelectColumns(FactRows, {"geography_key", "country", "region", "state", "city"}))
+
+expression DateRows = ```
+let
+    Source = Table.TransformColumnTypes(FactRows, {{"order_date", type date}}, "en-US"),
+    FirstDate = List.Min(Source[order_date]),
+    LastDate = List.Max(Source[order_date]),
+    Dates = List.Dates(FirstDate, Duration.Days(LastDate - FirstDate) + 1, #duration(1, 0, 0, 0)),
+    Base = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+    AddYear = Table.AddColumn(Base, "Year", each Date.Year([Date]), Int64.Type),
+    AddMonthNumber = Table.AddColumn(AddYear, "Month Number", each Date.Month([Date]), Int64.Type),
+    AddMonth = Table.AddColumn(AddMonthNumber, "Month", each Date.ToText([Date], "MMM", "en-US"), type text),
+    AddYearMonth = Table.AddColumn(AddMonth, "Year-Month", each Date.ToText([Date], "yyyy-MM", "en-US"), type text),
+    AddYearMonthSort = Table.AddColumn(AddYearMonth, "Year-Month Sort", each Date.Year([Date]) * 100 + Date.Month([Date]), Int64.Type),
+    AddQuarterNumber = Table.AddColumn(AddYearMonthSort, "Quarter Number", each Date.QuarterOfYear([Date]), Int64.Type),
+    AddQuarter = Table.AddColumn(AddQuarterNumber, "Quarter", each "Q" & Text.From([Quarter Number]) & " " & Text.From([Year]), type text),
+    AddYearQuarterSort = Table.AddColumn(AddQuarter, "Year-Quarter Sort", each [Year] * 10 + [Quarter Number], Int64.Type)
+in
+    AddYearQuarterSort
+```
