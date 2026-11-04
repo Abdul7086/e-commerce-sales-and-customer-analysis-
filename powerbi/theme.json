@@ -1,0 +1,6 @@
+{
+  "name": "Superstore Executive",
+  "dataColors": ["#137C8B", "#F29E4C", "#476A6F", "#8E6C88", "#D1495B", "#4F6D7A", "#90BE6D", "#F6BD60"],
+  "background": "#F5F7FA", "foreground": "#17324D", "tableAccent": "#137C8B",
+  "visualStyles": {"*": {"*": [{"title": [{"fontFamily": "Aptos", "fontSize": 12, "color": {"solid": {"color": "#17324D"}}}], "visualHeader": [{"show": true}]}]}}
+}
