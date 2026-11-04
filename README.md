@@ -8,7 +8,7 @@ Interview-ready, reproducible analytics project built from the provided Sample S
 2. Run `python src/pipeline.py` from this folder.
 3. Open `data/processed/superstore_analysis.xlsx` for the Excel deliverable. The cleaned CSV, profile, and validation report are created beside it.
 4. Run `python src/load_sqlite.py` to create a local SQLite star schema at `data/processed/superstore.db`; query it with the scripts in `sql/`.
-5. Follow [Power BI build instructions](docs/POWER_BI.md) to create the report in Power BI Desktop. A `.pbix` is intentionally not included: it cannot be authored or validated in this environment.
+5. Follow [Power BI build instructions](docs/POWER_BI.md) and the [reference-matched layout](powerbi/layout.json) to create the report in Power BI Desktop. A `.pbix` is intentionally not included because Power BI Desktop is unavailable here for authoring and validation.
 
 ## Questions this dashboard answers
 

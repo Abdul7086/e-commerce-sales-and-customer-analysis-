@@ -1,0 +1,15 @@
+DimDate =
+VAR FirstOrderDate = MINX(ALL(FactOrderLine), FactOrderLine[Order Date])
+VAR LastOrderDate = MAXX(ALL(FactOrderLine), FactOrderLine[Order Date])
+RETURN
+    ADDCOLUMNS(
+        CALENDAR(FirstOrderDate, LastOrderDate),
+        "Year", YEAR([Date]),
+        "Month Number", MONTH([Date]),
+        "Month", FORMAT([Date], "MMM"),
+        "Year-Month", FORMAT([Date], "YYYY-MM"),
+        "Year-Month Sort", YEAR([Date]) * 100 + MONTH([Date]),
+        "Quarter Number", QUARTER([Date]),
+        "Quarter", "Q" & FORMAT(QUARTER([Date]), "0") & " " & FORMAT([Date], "YYYY"),
+        "Year-Quarter Sort", YEAR([Date]) * 10 + QUARTER([Date])
+    )
