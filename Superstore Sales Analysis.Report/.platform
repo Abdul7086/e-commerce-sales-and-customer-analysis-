@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Superstore Sales Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "96d308e5-2c5d-535b-9b14-a898202ebd44"
+  }
+}

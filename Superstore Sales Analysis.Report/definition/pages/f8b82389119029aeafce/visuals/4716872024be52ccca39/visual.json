@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "4716872024be52ccca39",
+  "position": {
+    "x": 10,
+    "y": 14,
+    "width": 405,
+    "height": 101,
+    "z": 1000,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "SUPERSTORE SALES & CUSTOMER ANALYSIS",
+                    "textStyle": {
+                      "fontSize": "25pt",
+                      "fontWeight": "bold",
+                      "color": "#17324D"
+                    }
+                  },
+                  {
+                    "value": "\nSales, profit and customer performance | 2014–2017",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#476A6F"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "annotations": [
+    {
+      "name": "buildLabel",
+      "value": "DashboardTitle"
+    }
+  ]
+}
