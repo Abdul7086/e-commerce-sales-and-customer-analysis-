@@ -24,10 +24,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Sales"
+                  "Property": "Total Sales"
                 }
               },
-              "queryRef": "FactOrderLine.Sales"
+              "queryRef": "FactOrderLine.Total Sales"
             }
           ]
         }

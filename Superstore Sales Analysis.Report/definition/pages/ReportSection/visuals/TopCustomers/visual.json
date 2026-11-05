@@ -41,10 +41,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Sales"
+                  "Property": "Total Sales"
                 }
               },
-              "queryRef": "FactOrderLine.Sales"
+              "queryRef": "FactOrderLine.Total Sales"
             }
           ]
         },
@@ -58,10 +58,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Profit"
+                  "Property": "Total Profit"
                 }
               },
-              "queryRef": "FactOrderLine.Profit"
+              "queryRef": "FactOrderLine.Total Profit"
             }
           ]
         }
@@ -76,7 +76,7 @@
                     "Entity": "FactOrderLine"
                   }
                 },
-                "Property": "Sales"
+                "Property": "Total Sales"
               }
             },
             "direction": "Descending"

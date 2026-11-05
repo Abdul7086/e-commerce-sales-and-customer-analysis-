@@ -41,10 +41,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Quantity"
+                  "Property": "Total Quantity"
                 }
               },
-              "queryRef": "FactOrderLine.Quantity"
+              "queryRef": "FactOrderLine.Total Quantity"
             }
           ]
         }

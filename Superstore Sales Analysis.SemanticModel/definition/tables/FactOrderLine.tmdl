@@ -98,13 +98,13 @@ table FactOrderLine
 		dataType: boolean
 		sourceColumn: is_valid
 		isHidden
-	measure Sales = SUM(FactOrderLine[Sales])
+	measure 'Total Sales' = SUM(FactOrderLine[Sales])
 		formatString: $#,0.00;($#,0.00);$#,0.00
 
-	measure Profit = SUM(FactOrderLine[Profit])
+	measure 'Total Profit' = SUM(FactOrderLine[Profit])
 		formatString: $#,0.00;($#,0.00);$#,0.00
 
-	measure Quantity = SUM(FactOrderLine[Quantity])
+	measure 'Total Quantity' = SUM(FactOrderLine[Quantity])
 		formatString: #,0
 
 	measure Orders = DISTINCTCOUNT(FactOrderLine[Order ID])
@@ -113,16 +113,16 @@ table FactOrderLine
 	measure Customers = DISTINCTCOUNT(DimCustomer[Customer ID])
 		formatString: #,0
 
-	measure 'Average Order Value' = DIVIDE([Sales], [Orders])
+	measure 'Average Order Value' = DIVIDE([Total Sales], [Orders])
 		formatString: $#,0.00
 
-	measure 'Profit Margin' = DIVIDE([Profit], [Sales])
+	measure 'Profit Margin' = DIVIDE([Total Profit], [Total Sales])
 		formatString: 0.0%;-0.0%;0.0%
 
-	measure 'Sales YoY %' = VAR PriorYearSales = CALCULATE([Sales], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Sales] - PriorYearSales, PriorYearSales)
+	measure 'Sales YoY %' = VAR PriorYearSales = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Total Sales] - PriorYearSales, PriorYearSales)
 		formatString: 0.0%;-0.0%;0.0%
 
-	measure 'Profit YoY %' = VAR PriorYearProfit = CALCULATE([Profit], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Profit] - PriorYearProfit, ABS(PriorYearProfit))
+	measure 'Profit YoY %' = VAR PriorYearProfit = CALCULATE([Total Profit], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Total Profit] - PriorYearProfit, ABS(PriorYearProfit))
 		formatString: 0.0%;-0.0%;0.0%
 
 	measure 'Average Discount' = AVERAGE(FactOrderLine[Discount])
@@ -134,7 +134,7 @@ table FactOrderLine
 	measure 'Loss Line %' = DIVIDE([Loss Making Lines], COUNTROWS(FactOrderLine))
 		formatString: 0.0%
 
-	measure 'Sales per Customer' = DIVIDE([Sales], [Customers])
+	measure 'Sales per Customer' = DIVIDE([Total Sales], [Customers])
 		formatString: $#,0.00
 	partition FactOrderLine = m
 		mode: import

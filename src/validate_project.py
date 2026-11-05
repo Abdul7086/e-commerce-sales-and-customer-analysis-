@@ -47,6 +47,10 @@ def main():
     table_text = {p.stem: p.read_text(encoding="utf-8") for p in table_dir.glob("*.tmdl")}
     require(set(table_text) == {"FactOrderLine", "DimCustomer", "DimProduct", "DimGeography", "DimShipMode", "DimDate"}, "TMDL model has the fact table and five dimensions")
     all_model = "\n".join(table_text.values())
+    for table_name, definition in table_text.items():
+        column_names = {m.group(1).strip().strip("'") for m in re.finditer(r"(?m)^\s*column\s+(.+?)\s*$", definition)}
+        measure_names = {m.group(1).strip().strip("'") for m in re.finditer(r"(?m)^\s*measure\s+(.+?)\s*=", definition)}
+        require(not (column_names & measure_names), f"{table_name} has no column/measure name conflicts")
     for v in visual_data:
         q = v["visual"].get("query", {}).get("queryState", {})
         for role in q.values():

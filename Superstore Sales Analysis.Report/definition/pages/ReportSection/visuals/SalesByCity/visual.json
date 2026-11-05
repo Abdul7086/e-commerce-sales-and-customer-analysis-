@@ -58,10 +58,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Quantity"
+                  "Property": "Total Quantity"
                 }
               },
-              "queryRef": "FactOrderLine.Quantity"
+              "queryRef": "FactOrderLine.Total Quantity"
             },
             {
               "field": {
@@ -71,10 +71,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Profit"
+                  "Property": "Total Profit"
                 }
               },
-              "queryRef": "FactOrderLine.Profit"
+              "queryRef": "FactOrderLine.Total Profit"
             }
           ]
         }

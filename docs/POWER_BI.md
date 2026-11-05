@@ -20,19 +20,19 @@ Build a 16:9 page with a dark navy-to-teal gradient or solid navy background and
 
 | Reference visual | Superstore implementation |
 |---|---|
-| Sales/Amount KPI | `[Sales]` |
-| Profit KPI | `[Profit]` |
-| Quantity KPI | `[Quantity]` |
+| Sales/Amount KPI | `[Total Sales]` |
+| Profit KPI | `[Total Profit]` |
+| Quantity KPI | `[Total Quantity]` |
 | AOV KPI | `[Average Order Value]` (sales / distinct orders) |
-| Profit by month column chart | DimDate month on axis, `[Profit]` as value; sort by date |
-| Profit by sub-category chart | Sub-Category on axis, `[Profit]`; sort ascending to expose losses |
-| Category donut | Category as legend, `[Quantity]` as value; `[Profit]` in tooltip |
-| Payment mode donut | Ship Mode as legend, `[Quantity]` as value; this is the explicit field substitution; `[Profit]` in tooltip |
-| State amount/profit chart | State on axis, `[Sales]` as value; `[Profit]` in tooltip; allow cross-filtering |
-| Top customer chart | Customer Name on axis, `[Sales]`, visual filter Top 10 by `[Sales]` |
+| Profit by month column chart | DimDate month on axis, `[Total Profit]` as value; sort by date |
+| Profit by sub-category chart | Sub-Category on axis, `[Total Profit]`; sort ascending to expose losses |
+| Category donut | Category as legend, `[Total Quantity]` as value; `[Total Profit]` in tooltip |
+| Payment mode donut | Ship Mode as legend, `[Total Quantity]` as value; this is the explicit field substitution; `[Total Profit]` in tooltip |
+| State amount/profit chart | State on axis, `[Total Sales]` as value; `[Total Profit]` in tooltip; allow cross-filtering |
+| Top customer chart | Customer Name on axis, `[Total Sales]`, visual filter Top 10 by `[Total Sales]` |
 | Quarterly slicer | DimDate[Quarter] slicer, preferably dropdown |
 | State slicer | DimGeography[State] slicer, searchable dropdown |
-| City map | City as location, `[Sales]` as bubble size; tooltips include `[Profit]`, `[Orders]`, `[Quantity]` |
+| City map | City as location, `[Total Sales]` as bubble size; tooltips include `[Total Profit]`, `[Orders]`, `[Total Quantity]` |
 Use question-led chart titles such as “Which sub-categories lose money?” Add a footer: “Source: Sample Superstore | 2014–2017 | line-level sales and profit”.
 
 ## Drill and interactions
@@ -55,4 +55,6 @@ Use question-led chart titles such as “Which sub-categories lose money?” Add
 
 Run `python src/build_powerbi.py` after the data pipeline. This creates `Superstore Sales Analysis.pbip`, a PBIR report folder with all 14 visuals, and a TMDL semantic model with imported data and one-to-many dimensions. The builder writes the current checkout path into its `pProjectRoot` query parameter. Rerun it after cloning or moving the checkout, then open the `.pbip` in Power BI Desktop.
 
-Power BI Desktop is not installed in this environment, so the PBIP could not be opened, refreshed, saved, or exported as a binary `.pbix` here. In Desktop, first refresh the cleaned CSV, mark `DimDate` as the date table, confirm sort-by columns and relationships, then save. The Top 10 customer filter is included in the report definition; verify the Top N shows ten values after refresh.
+The reference file `E-commerce Sales Dashboard.pbix` is only a style example and contains a different dataset. Open `Superstore Sales Analysis.pbip` from this project folder. The Superstore model uses `FactOrderLine`, `DimDate`, `DimCustomer`, and other dimensions; it uses Ship Mode because the supplied data has no Payment Mode column.
+
+The project generator uses distinct measure names (`Total Sales`, `Total Profit`, and `Total Quantity`) so they do not conflict with same-named source columns. The static validator checks these naming rules and report field references. The PBIP should still be refreshed and inspected in Power BI Desktop after generation; a binary `.pbix` is not included because the corrected project has not been exported from Desktop. Mark `DimDate` as the date table, confirm sort-by columns and relationships, then save as `Superstore_Sales_Customer_Analysis.pbix`. The Top 10 customer filter is included; verify it shows ten values after refresh.

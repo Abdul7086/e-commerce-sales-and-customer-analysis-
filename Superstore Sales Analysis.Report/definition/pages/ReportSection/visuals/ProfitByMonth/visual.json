@@ -41,10 +41,10 @@
                       "Entity": "FactOrderLine"
                     }
                   },
-                  "Property": "Profit"
+                  "Property": "Total Profit"
                 }
               },
-              "queryRef": "FactOrderLine.Profit"
+              "queryRef": "FactOrderLine.Total Profit"
             }
           ]
         }

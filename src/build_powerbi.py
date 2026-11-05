@@ -149,15 +149,15 @@ def make_pbip():
     # Reference visual mapping: four KPI cards, profit trend, product/customer/state
     # charts, two slicers, city map, and two quantity breakdown donuts.
     specs = [
-        ("ProfitByMonth", "columnChart", {"x": 687, "y": 435, "width": 579, "height": 276}, projections(Category=[proj(col("DimDate", "Year-Month"), "DimDate.Year-Month")], Y=[proj(measure("FactOrderLine", "Profit"), "FactOrderLine.Profit")]), "Profit by Month", {"sort": [{"field": col("DimDate", "Year-Month"), "direction": "Ascending"}], "isDefaultSort": False}),
-        ("ProfitBySubCategory", "columnChart", {"x": 687, "y": 115, "width": 219, "height": 305}, projections(Category=[proj(col("DimProduct", "Sub-Category"), "DimProduct.Sub-Category")], Y=[proj(measure("FactOrderLine", "Profit"), "FactOrderLine.Profit")]), "Profit by Sub-Category", None),
-        ("QuantityByCategory", "donutChart", {"x": 344, "y": 494, "width": 332, "height": 216}, projections(Category=[proj(col("DimProduct", "Category"), "DimProduct.Category")], Y=[proj(measure("FactOrderLine", "Quantity"), "FactOrderLine.Quantity")]), "Quantity by Category", None),
-        ("QuantityByShipMode", "donutChart", {"x": 347, "y": 266, "width": 329, "height": 216}, projections(Category=[proj(col("DimShipMode", "Ship Mode"), "DimShipMode.Ship Mode")], Y=[proj(measure("FactOrderLine", "Quantity"), "FactOrderLine.Quantity")]), "Quantity by Ship Mode", None),
-        ("SalesByState", "barChart", {"x": 10, "y": 266, "width": 325, "height": 216}, projections(Category=[proj(col("DimGeography", "State"), "DimGeography.State")], Y=[proj(measure("FactOrderLine", "Sales"), "FactOrderLine.Sales")], Tooltips=[proj(measure("FactOrderLine", "Profit"), "FactOrderLine.Profit")]), "Sales by State", None),
-        ("TopCustomers", "columnChart", {"x": 10, "y": 494, "width": 325, "height": 216}, projections(Category=[proj(col("DimCustomer", "Customer Name"), "DimCustomer.Customer Name")], Y=[proj(measure("FactOrderLine", "Sales"), "FactOrderLine.Sales")], Tooltips=[proj(measure("FactOrderLine", "Profit"), "FactOrderLine.Profit")]), "Customer Sales (sort by Sales; filter Top 10)", {"sort": [{"field": measure("FactOrderLine", "Sales"), "direction": "Descending"}], "isDefaultSort": False}),
+        ("ProfitByMonth", "columnChart", {"x": 687, "y": 435, "width": 579, "height": 276}, projections(Category=[proj(col("DimDate", "Year-Month"), "DimDate.Year-Month")], Y=[proj(measure("FactOrderLine", "Total Profit"), "FactOrderLine.Total Profit")]), "Profit by Month", {"sort": [{"field": col("DimDate", "Year-Month"), "direction": "Ascending"}], "isDefaultSort": False}),
+        ("ProfitBySubCategory", "columnChart", {"x": 687, "y": 115, "width": 219, "height": 305}, projections(Category=[proj(col("DimProduct", "Sub-Category"), "DimProduct.Sub-Category")], Y=[proj(measure("FactOrderLine", "Total Profit"), "FactOrderLine.Total Profit")]), "Profit by Sub-Category", None),
+        ("QuantityByCategory", "donutChart", {"x": 344, "y": 494, "width": 332, "height": 216}, projections(Category=[proj(col("DimProduct", "Category"), "DimProduct.Category")], Y=[proj(measure("FactOrderLine", "Total Quantity"), "FactOrderLine.Total Quantity")]), "Quantity by Category", None),
+        ("QuantityByShipMode", "donutChart", {"x": 347, "y": 266, "width": 329, "height": 216}, projections(Category=[proj(col("DimShipMode", "Ship Mode"), "DimShipMode.Ship Mode")], Y=[proj(measure("FactOrderLine", "Total Quantity"), "FactOrderLine.Total Quantity")]), "Quantity by Ship Mode", None),
+        ("SalesByState", "barChart", {"x": 10, "y": 266, "width": 325, "height": 216}, projections(Category=[proj(col("DimGeography", "State"), "DimGeography.State")], Y=[proj(measure("FactOrderLine", "Total Sales"), "FactOrderLine.Total Sales")], Tooltips=[proj(measure("FactOrderLine", "Total Profit"), "FactOrderLine.Total Profit")]), "Sales by State", None),
+        ("TopCustomers", "columnChart", {"x": 10, "y": 494, "width": 325, "height": 216}, projections(Category=[proj(col("DimCustomer", "Customer Name"), "DimCustomer.Customer Name")], Y=[proj(measure("FactOrderLine", "Total Sales"), "FactOrderLine.Total Sales")], Tooltips=[proj(measure("FactOrderLine", "Total Profit"), "FactOrderLine.Total Profit")]), "Customer Sales (sort by Sales; filter Top 10)", {"sort": [{"field": measure("FactOrderLine", "Total Sales"), "direction": "Descending"}], "isDefaultSort": False}),
         ("QuarterSlicer", "slicer", {"x": 423, "y": 14, "width": 253, "height": 101}, projections(Values=[proj(col("DimDate", "Quarter"), "DimDate.Quarter")]), "Order Quarter", None),
         ("StateSlicer", "slicer", {"x": 687, "y": 14, "width": 217, "height": 89}, projections(Values=[proj(col("DimGeography", "State"), "DimGeography.State")]), "State", None),
-        ("SalesByCity", "map", {"x": 919, "y": 14, "width": 348, "height": 406}, projections(Category=[proj(col("DimGeography", "City"), "DimGeography.City")], Size=[proj(measure("FactOrderLine", "Orders"), "FactOrderLine.Orders")], Tooltips=[proj(measure("FactOrderLine", "Quantity"), "FactOrderLine.Quantity"), proj(measure("FactOrderLine", "Profit"), "FactOrderLine.Profit")]), "Sales by City (bubble size = Orders)", None),
+        ("SalesByCity", "map", {"x": 919, "y": 14, "width": 348, "height": 406}, projections(Category=[proj(col("DimGeography", "City"), "DimGeography.City")], Size=[proj(measure("FactOrderLine", "Orders"), "FactOrderLine.Orders")], Tooltips=[proj(measure("FactOrderLine", "Total Quantity"), "FactOrderLine.Total Quantity"), proj(measure("FactOrderLine", "Total Profit"), "FactOrderLine.Total Profit")]), "Sales by City (bubble size = Orders)", None),
     ]
     for i, (name, vtype, pos, roles, title, sorting) in enumerate(specs):
         visual(name, vtype, pos, roles, title, query_options=sorting)
@@ -176,9 +176,9 @@ def make_pbip():
     }]}
     write_json(top_customer_path, top_customer_visual)
     kpis = [
-        ("SalesCard", "Sales", "Sales", 10),
-        ("ProfitCard", "Profit", "Profit", 178),
-        ("QuantityCard", "Quantity", "Quantity", 347),
+        ("SalesCard", "Sales", "Total Sales", 10),
+        ("ProfitCard", "Profit", "Total Profit", 178),
+        ("QuantityCard", "Quantity", "Total Quantity", 347),
         ("AOVCard", "Average Order Value", "Average Order Value", 516),
     ]
     for name, title, measure_name, x in kpis:
@@ -261,19 +261,19 @@ relationship OrderDate
         ("Sales", "sales", "double", False), ("Quantity", "quantity", "int64", False), ("Discount", "discount", "double", False), ("Profit", "profit", "double", False), ("Ship Days", "ship_days", "int64", False),
         ("Geography Key", "geography_key", "string", True), ("Order Year", "order_year", "int64", True), ("Order Month", "order_month", "int64", True), ("Order Month Name", "order_month_name", "string", True), ("Order Quarter", "order_quarter", "string", True), ("Is Valid", "is_valid", "boolean", True),
     ]
-    measures = '''\tmeasure Sales = SUM(FactOrderLine[Sales])\n\t\tformatString: $#,0.00;($#,0.00);$#,0.00
-\n\tmeasure Profit = SUM(FactOrderLine[Profit])\n\t\tformatString: $#,0.00;($#,0.00);$#,0.00
-\n\tmeasure Quantity = SUM(FactOrderLine[Quantity])\n\t\tformatString: #,0
+    measures = '''\tmeasure 'Total Sales' = SUM(FactOrderLine[Sales])\n\t\tformatString: $#,0.00;($#,0.00);$#,0.00
+\n\tmeasure 'Total Profit' = SUM(FactOrderLine[Profit])\n\t\tformatString: $#,0.00;($#,0.00);$#,0.00
+\n\tmeasure 'Total Quantity' = SUM(FactOrderLine[Quantity])\n\t\tformatString: #,0
 \n\tmeasure Orders = DISTINCTCOUNT(FactOrderLine[Order ID])\n\t\tformatString: #,0
 \n\tmeasure Customers = DISTINCTCOUNT(DimCustomer[Customer ID])\n\t\tformatString: #,0
-\n\tmeasure 'Average Order Value' = DIVIDE([Sales], [Orders])\n\t\tformatString: $#,0.00
-\n\tmeasure 'Profit Margin' = DIVIDE([Profit], [Sales])\n\t\tformatString: 0.0%;-0.0%;0.0%
-\n\tmeasure 'Sales YoY %' = VAR PriorYearSales = CALCULATE([Sales], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Sales] - PriorYearSales, PriorYearSales)\n\t\tformatString: 0.0%;-0.0%;0.0%
-\n\tmeasure 'Profit YoY %' = VAR PriorYearProfit = CALCULATE([Profit], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Profit] - PriorYearProfit, ABS(PriorYearProfit))\n\t\tformatString: 0.0%;-0.0%;0.0%
+\n\tmeasure 'Average Order Value' = DIVIDE([Total Sales], [Orders])\n\t\tformatString: $#,0.00
+\n\tmeasure 'Profit Margin' = DIVIDE([Total Profit], [Total Sales])\n\t\tformatString: 0.0%;-0.0%;0.0%
+\n\tmeasure 'Sales YoY %' = VAR PriorYearSales = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Total Sales] - PriorYearSales, PriorYearSales)\n\t\tformatString: 0.0%;-0.0%;0.0%
+\n\tmeasure 'Profit YoY %' = VAR PriorYearProfit = CALCULATE([Total Profit], SAMEPERIODLASTYEAR(DimDate[Date])) RETURN DIVIDE([Total Profit] - PriorYearProfit, ABS(PriorYearProfit))\n\t\tformatString: 0.0%;-0.0%;0.0%
 \n\tmeasure 'Average Discount' = AVERAGE(FactOrderLine[Discount])\n\t\tformatString: 0.0%
 \n\tmeasure 'Loss Making Lines' = CALCULATE(COUNTROWS(FactOrderLine), FactOrderLine[Profit] < 0)\n\t\tformatString: #,0
 \n\tmeasure 'Loss Line %' = DIVIDE([Loss Making Lines], COUNTROWS(FactOrderLine))\n\t\tformatString: 0.0%
-\n\tmeasure 'Sales per Customer' = DIVIDE([Sales], [Customers])\n\t\tformatString: $#,0.00'''
+\n\tmeasure 'Sales per Customer' = DIVIDE([Total Sales], [Customers])\n\t\tformatString: $#,0.00'''
     write_text(TABLES_DIR / "FactOrderLine.tmdl", table_file("FactOrderLine", fact_columns, "FactRows", measures))
     write_text(TABLES_DIR / "DimCustomer.tmdl", table_file("DimCustomer", [("Customer ID", "customer_id", "string", False), ("Customer Name", "customer_name", "string", False), ("Segment", "segment", "string", False)], "CustomerRows"))
     write_text(TABLES_DIR / "DimProduct.tmdl", table_file("DimProduct", [("Product ID", "product_id", "string", False), ("Product Name", "product_name", "string", False), ("Category", "category", "string", False), ("Sub-Category", "sub_category", "string", False)], "ProductRows"))
