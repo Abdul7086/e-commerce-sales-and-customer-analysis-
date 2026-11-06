@@ -27,7 +27,11 @@ let
     FirstDate = List.Min(Source[order_date]),
     LastDate = List.Max(Source[order_date]),
     Dates = List.Dates(FirstDate, Duration.Days(LastDate - FirstDate) + 1, #duration(1, 0, 0, 0)),
-    Base = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+    Base = Table.TransformColumnTypes(
+        Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+        {{"Date", type date}},
+        "en-US"
+    ),
     AddYear = Table.AddColumn(Base, "Year", each Date.Year([Date]), Int64.Type),
     AddMonthNumber = Table.AddColumn(AddYear, "Month Number", each Date.Month([Date]), Int64.Type),
     AddMonth = Table.AddColumn(AddMonthNumber, "Month", each Date.ToText([Date], "MMM", "en-US"), type text),
