@@ -2,6 +2,10 @@
 
 Interview-ready, reproducible analytics project built from the provided Sample Superstore data. It covers Python profiling and cleaning, an Excel analysis workbook, a relational SQL model, and a Power BI report specification. The data describes US retail order lines from 2014–2017; it is not a live e-commerce platform dataset.
 
+![Superstore Sales & Customer Analysis dashboard](docs/dashboard-preview.png)
+
+*Dashboard preview from Power BI Desktop.*
+
 ## Start here
 
 1. Install Python 3.10+ and run `python -m pip install -r requirements.txt`.
