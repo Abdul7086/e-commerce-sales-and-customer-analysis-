@@ -24,7 +24,7 @@ Build a 16:9 page with a dark navy-to-teal gradient or solid navy background and
 | Profit KPI | `[Total Profit]` |
 | Quantity KPI | `[Total Quantity]` |
 | AOV KPI | `[Average Order Value]` (sales / distinct orders) |
-| Profit by month column chart | DimDate month on axis, `[Total Profit]` as value; sort by date |
+| Profit by month column chart | DimDate year-month on axis, `[Total Profit]` as value; sort chronologically by the date/sort column |
 | Profit by sub-category chart | Sub-Category on axis, `[Total Profit]`; sort ascending to expose losses |
 | Category donut | Category as legend, `[Total Quantity]` as value; `[Total Profit]` in tooltip |
 | Payment mode donut | Ship Mode as legend, `[Total Quantity]` as value; this is the explicit field substitution; `[Total Profit]` in tooltip |
@@ -32,7 +32,7 @@ Build a 16:9 page with a dark navy-to-teal gradient or solid navy background and
 | Top customer chart | Customer Name on axis, `[Total Sales]`, visual filter Top 10 by `[Total Sales]` |
 | Quarterly slicer | DimDate[Quarter] slicer, preferably dropdown |
 | State slicer | DimGeography[State] slicer, searchable dropdown |
-| City map | City as location, `[Total Sales]` as bubble size; tooltips include `[Total Profit]`, `[Orders]`, `[Total Quantity]` |
+| City map | City as location, `[Orders]` as bubble size in the generated report; tooltips include sales, profit, orders, and quantity |
 Use question-led chart titles such as “Which sub-categories lose money?” Add a footer: “Source: Sample Superstore | 2014–2017 | line-level sales and profit”.
 
 ## Drill and interactions

@@ -40,7 +40,7 @@ The pipeline preserves every original row and adds `is_valid` so questionable re
 
 ## Reproducibility and validation
 
-`validation.json` reports source row count and key data rules. Run `python src/validate_project.py` for the complete workflow check after generating the Excel, SQLite, and PBIP outputs. The expected row count is the known 9,994 rows in this supplied extract; change the check if using another version. See [Data Dictionary](docs/DATA_DICTIONARY.md) and [Interview Guide](docs/INTERVIEW_GUIDE.md).
+`validation.json` reports source row count and key data rules. Run `python src/validate_project.py` for the complete workflow check after generating the Excel, SQLite, and PBIP outputs. The expected row count is the known 9,994 rows in this supplied extract; change the check if using another version. See [Data Dictionary](docs/DATA_DICTIONARY.md), [Interview Guide](docs/INTERVIEW_GUIDE.md), and the detailed [Project Walkthrough and Interview Q&A](docs/PROJECT_WALKTHROUGH_AND_INTERVIEW_QA.md) with a step-by-step explanation and 68 sample questions and answers.
 
 ## Important metric definitions
 
